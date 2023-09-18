@@ -1,16 +1,21 @@
 import random
-# 定义扑克牌的四种花色和13种牌面
-suits = ['h', 'd', 'c', 's']
-ranks = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A']
+
 
 # 生成一副标准扑克牌
-deck = [rank + suit for rank in ranks for suit in suits]
+def deal_new_deck():
+    # 定义扑克牌的四种花色和13种牌面
+    suits = ['h', 'd', 'c', 's']
+    ranks = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A']
+    deck = [rank + suit for rank in ranks for suit in suits]
+    return deck
+
 
 def evaluate_hand(hand):
     # 在这里实现手牌评估逻辑，可以使用德州扑克规则进行评估
     # 你可以使用库或者自己编写规则来评估手牌的强度
     # 返回一个用于比较的分数，分数越高手牌越强
     pass
+
 
 def compare_hands(player1_hand, player2_hand, community_cards="random"):
     # 计算玩家1和玩家2的手牌强度
@@ -25,15 +30,25 @@ def compare_hands(player1_hand, player2_hand, community_cards="random"):
     else:
         return "平局"
 
+
+# 随机发牌
 def deal_hand(deck):
-    print(len(deck))
+    # 随机两张牌
     hands = random.sample(deck, 2)
-    # 弹出被选中的元素
+    # pop out
     for card in hands:
         deck.remove(card)
-    print(len(deck))
-    print(deck)
     return hands
+
+
+# 随机board
+def deal_random_board(deck):
+    board = random.sample(deck, 5)
+    # pop out
+    for card in board:
+        deck.remove(card)
+    return board
+
 
 # 输入两位玩家的手牌和公共牌
 # player1_hand = ["As", "Ks"]  # 例如，Ace of Spades 和 King of Spades
@@ -43,7 +58,11 @@ def deal_hand(deck):
 # result = compare_hands(player1_hand, player2_hand, community_cards)
 # print(result)
 if __name__ == '__main__':
-    for i in range(26):
-        hands = deal_hand(deck)
-        print(hands)
-    
+    deck = deal_new_deck()
+    hands1 = deal_hand(deck)
+    hands2 = deal_hand(deck)
+    board = deal_random_board(deck)
+    print(hands1)
+    print(hands2)
+    print(board)
+    print(len(deck))
