@@ -104,7 +104,6 @@ def singleRange2Hand(range_str):
                     kicker_card] and card_value_dict[
                         element] < card_value_dict[high_card]:
                 higher_cards.append(element)
-        print(higher_cards)
         # suited
         suit_flag = range_str[2]
         if suit_flag == "s":
@@ -139,8 +138,21 @@ def singleRange2Hand(range_str):
             return []
 
 
+def range2Hand(ranges_str):
+    ranges = ranges_str.split(",")
+    hand_combinations = []
+    for range_str in ranges:
+        hand_combos = singleRange2Hand(range_str)
+        hand_combinations += hand_combos
+    return hand_combinations
+
+
 if __name__ == '__main__':
     # 示例用法
-    range_str = "AQo+"
-    hand_combinations = singleRange2Hand(range_str)
+    # range_str = "T9s+"
+    # hand_combinations = singleRange2Hand(range_str)
+    # print("具体的手牌组合:", len(hand_combinations), hand_combinations)
+
+    ranges_str = "AQo+,AJs+,88+,KQs"
+    hand_combinations = range2Hand(ranges_str)
     print("具体的手牌组合:", len(hand_combinations), hand_combinations)
