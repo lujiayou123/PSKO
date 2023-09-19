@@ -59,19 +59,20 @@ class MyWindow(QMainWindow, Ui_PSKO):
         self.textBrowser_range.setText("66+,AJo+,ATs+,KQs")
 
     def on_range_label3_click(self, event):
-        self.textBrowser_range.setText("22+,A2+,K8o+,K2s+,Q8s+,Q9o+,JTo+,J9s+")
+        self.textBrowser_range.setText("A2s+,A4o+,KQo,KTs+,33+")
 
     def on_range_label4_click(self, event):
+        self.textBrowser_range.setText(
+            "A2+,K8o+,K2s+,Q8s+\nQ9o+,JTo+,J9s+,22+")
+
+    def on_range_label5_click(self, event):
         self.textBrowser_range.setText(
             "22+,A2+,K2s+,K8o+\nQ4s+,Q8o+,J6s+,J8o+\nT6s+,T8o+,95s+,98o+\n84s+,87o,74s+,76o\n63s+,53s+,43s"
         )
 
-    def on_range_label5_click(self, event):
-        self.textBrowser_range.setText("除了27o,26o这些垃圾，Almost AnyTwo")
-
     def on_range_button_click(self):
         self.child_window = ChildWindow()
-        image_path = "images/vs_tight_range.png"
+        image_path = "images/vs_super_tight_range.png"
         self.showImage(image_path)
         self.child_window.show()
 
@@ -84,19 +85,19 @@ class MyWindow(QMainWindow, Ui_PSKO):
 
     def on_range_button3_click(self):
         self.child_window = ChildWindow()
-        image_path = "images/vs_tight_range.png"
+        image_path = "images/vs_standard_range.png"
         self.showImage(image_path)
         self.child_window.show()
 
     def on_range_button4_click(self):
         self.child_window = ChildWindow()
-        image_path = "images/vs_tight_range.png"
+        image_path = "images/vs_wide_range.png"
         self.showImage(image_path)
         self.child_window.show()
 
     def on_range_button5_click(self):
         self.child_window = ChildWindow()
-        image_path = "images/vs_tight_range.png"
+        image_path = "images/vs_super_wide_range.png"
         self.showImage(image_path)
         self.child_window.show()
 

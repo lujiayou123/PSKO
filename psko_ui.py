@@ -241,7 +241,7 @@ class Ui_PSKO(object):
         self.range_label_2.setText(_translate("PSKO", "紧"))
         self.rangeButton_2.setText(_translate("PSKO", "显示"))
         self.rangeButton_3.setText(_translate("PSKO", "显示"))
-        self.range_label_3.setText(_translate("PSKO", "正常范围"))
+        self.range_label_3.setText(_translate("PSKO", "标准范围"))
         self.range_label_4.setText(_translate("PSKO", "宽范围"))
         self.rangeButton_4.setText(_translate("PSKO", "显示"))
         self.range_label_5.setText(_translate("PSKO", "超级宽"))
