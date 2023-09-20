@@ -2,8 +2,8 @@ import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QGraphicsPixmapItem, QGraphicsScene
 from PyQt5.QtGui import QImage, QPixmap
 from cal_equity import *
-# from Ui_psko import *
-from psko_ui import *
+from Ui_psko import *
+# from psko_ui import *
 from range_ui import *
 
 
@@ -31,12 +31,22 @@ class MyWindow(QMainWindow, Ui_PSKO):
         self.rangeButton_3.clicked.connect(self.on_range_button3_click)
         self.rangeButton_4.clicked.connect(self.on_range_button4_click)
         self.rangeButton_5.clicked.connect(self.on_range_button5_click)
+        self.rangeButton_11.clicked.connect(self.on_range_button11_click)
+        self.rangeButton_12.clicked.connect(self.on_range_button12_click)
+        self.rangeButton_13.clicked.connect(self.on_range_button13_click)
+        self.rangeButton_14.clicked.connect(self.on_range_button14_click)
+        self.rangeButton_15.clicked.connect(self.on_range_button15_click)
         # 显示对抗的范围
         self.range_label.mousePressEvent = self.on_range_label_click
         self.range_label_2.mousePressEvent = self.on_range_label2_click
         self.range_label_3.mousePressEvent = self.on_range_label3_click
         self.range_label_4.mousePressEvent = self.on_range_label4_click
         self.range_label_5.mousePressEvent = self.on_range_label5_click
+        self.range_label_11.mousePressEvent = self.on_range_label11_click
+        self.range_label_12.mousePressEvent = self.on_range_label12_click
+        self.range_label_13.mousePressEvent = self.on_range_label13_click
+        self.range_label_14.mousePressEvent = self.on_range_label14_click
+        self.range_label_15.mousePressEvent = self.on_range_label15_click
 
     def assure_textInput_notEmpty(self):
         for textInput in self.textInputs:
@@ -69,6 +79,36 @@ class MyWindow(QMainWindow, Ui_PSKO):
         self.textBrowser_range.setText(
             "22+,A2+,K2s+,K8o+\nQ4s+,Q8o+,J6s+,J8o+\nT6s+,T8o+,95s+,98o+\n84s+,87o,74s+,76o\n63s+,53s+,43s"
         )
+    
+    # 5bb jaming
+    def on_range_label11_click(self, event):
+        self.textBrowser_range.setText(
+            "A3o+,K9o+,QTo,JTo+\n33+,A2s+,K4s+,Q8s+\nJ8s+,T8s+,89s"
+        )
+    
+    # cold call short stack jaming, not allin
+    def on_range_label12_click(self, event):
+        self.textBrowser_range.setText(
+            "A5o+,K9o+,QTo+,JTo+\nA2s+,K4s+,Q8s+,J8s+\nT7s+,97s+,86s+,67s\n65s,22+"
+        )
+    
+    # short stack jam, middle stack cold call, late postion jaming attack
+    def on_range_label13_click(self, event):
+        self.textBrowser_range.setText(
+            "A8o+,KJo+,A4s+,K9s+\nQTs+,JTs+,55+"
+        )
+    
+    # Multiway, vs 1 big stack, and several(>=1) short stacks
+    def on_range_label14_click(self, event):
+        self.textBrowser_range.setText(
+            "[1]A5o+,KTo+,QJo+,A2s+\nK9s+,QTs+,JTs,44+\n[2]A8o+,KJo+,A3s+,K9s+\nQTs+,JTs,33+\n"
+        )
+    
+    # Multiway, vs many equal stacks
+    def on_range_label15_click(self, event):
+        self.textBrowser_range.setText(
+            "[1]A5o+,KTo+,QJo+,A2s+\nK9s+,QTs+,JTs,44+\n[2]A8o+,KJo+,A3+,K9s+\nQTs+,JTs,33+\n[3]AJo+,KQo,ATs+,KTs+\nQTs+,JTs,66+"
+        )
 
     def on_range_button_click(self):
         self.child_window = ChildWindow()
@@ -98,6 +138,37 @@ class MyWindow(QMainWindow, Ui_PSKO):
     def on_range_button5_click(self):
         self.child_window = ChildWindow()
         image_path = "images/vs_super_wide_range.png"
+        self.showImage(image_path)
+        self.child_window.show()
+        
+    def on_range_button11_click(self):
+        self.child_window = ChildWindow()
+        image_path = "images/vs_5bb_jam.png"
+        self.showImage(image_path)
+        self.child_window.show()
+
+    def on_range_button12_click(self):
+        self.child_window = ChildWindow()
+        # excel 130% zoom
+        image_path = "images/vs_cold_call.png"
+        self.showImage(image_path)
+        self.child_window.show()
+
+    def on_range_button13_click(self):
+        self.child_window = ChildWindow()
+        image_path = "images/vs_rejaming.png"
+        self.showImage(image_path)
+        self.child_window.show()
+
+    def on_range_button14_click(self):
+        self.child_window = ChildWindow()
+        image_path = "images/multiway_vs_two.png"
+        self.showImage(image_path)
+        self.child_window.show()
+
+    def on_range_button15_click(self):
+        self.child_window = ChildWindow()
+        image_path = "images/multiway_vs_three.png"
         self.showImage(image_path)
         self.child_window.show()
 
