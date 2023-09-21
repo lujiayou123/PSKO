@@ -79,31 +79,28 @@ class MyWindow(QMainWindow, Ui_PSKO):
         self.textBrowser_range.setText(
             "22+,A2+,K2s+,K8o+\nQ4s+,Q8o+,J6s+,J8o+\nT6s+,T8o+,95s+,98o+\n84s+,87o,74s+,76o\n63s+,53s+,43s"
         )
-    
+
     # 5bb jaming
     def on_range_label11_click(self, event):
         self.textBrowser_range.setText(
-            "A3o+,K9o+,QTo,JTo+\n33+,A2s+,K4s+,Q8s+\nJ8s+,T8s+,89s"
-        )
-    
+            "A3o+,K9o+,QTo,JTo+\n33+,A2s+,K4s+,Q8s+\nJ8s+,T8s+,89s")
+
     # cold call short stack jaming, not allin
     def on_range_label12_click(self, event):
         self.textBrowser_range.setText(
             "A5o+,K9o+,QTo+,JTo+\nA2s+,K4s+,Q8s+,J8s+\nT7s+,97s+,86s+,67s\n65s,22+"
         )
-    
+
     # short stack jam, middle stack cold call, late postion jaming attack
     def on_range_label13_click(self, event):
-        self.textBrowser_range.setText(
-            "A8o+,KJo+,A4s+,K9s+\nQTs+,JTs+,55+"
-        )
-    
+        self.textBrowser_range.setText("A8o+,KJo+,A4s+,K9s+\nQTs+,JTs+,55+")
+
     # Multiway, vs 1 big stack, and several(>=1) short stacks
     def on_range_label14_click(self, event):
         self.textBrowser_range.setText(
             "[1]A5o+,KTo+,QJo+,A2s+\nK9s+,QTs+,JTs,44+\n[2]A8o+,KJo+,A3s+,K9s+\nQTs+,JTs,33+\n"
         )
-    
+
     # Multiway, vs many equal stacks
     def on_range_label15_click(self, event):
         self.textBrowser_range.setText(
@@ -140,7 +137,7 @@ class MyWindow(QMainWindow, Ui_PSKO):
         image_path = "images/vs_super_wide_range.png"
         self.showImage(image_path)
         self.child_window.show()
-        
+
     def on_range_button11_click(self):
         self.child_window = ChildWindow()
         image_path = "images/vs_5bb_jam.png"
@@ -199,6 +196,7 @@ class ChildWindow(QWidget, Ui_Range):
 
 
 if __name__ == '__main__':
+    QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
     app = QApplication(sys.argv)
     myWin = MyWindow()
     myWin.show()
