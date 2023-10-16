@@ -11,7 +11,8 @@ class MyWindow(QMainWindow, Ui_PSKO):
     def __init__(self, parent=None):
         super(MyWindow, self).__init__(parent)
         self.setupUi(self)
-        self.setWindowTitle('PSKO')
+        self.setWindowTitle('PSKO（chipEV）')
+        self.chipMode = True  # chip / bb
         self.textEdit_leftPalyers.setPlainText("900")
         self.textEdit_totalPlayers.setPlainText("1000")
         self.textEdit_startingChips.setPlainText("10000")
@@ -24,7 +25,11 @@ class MyWindow(QMainWindow, Ui_PSKO):
         self.textInputs.append(self.textEdit_startingChips)
         self.textInputs.append(self.textEdit_leftPalyers)
         # 计算equity
-        self.calculateButton.clicked.connect(self.on_button_click)
+        self.calculateButton.clicked.connect(self.on_calculate_button_click)
+        # 计算赏金价值
+        self.button_transferBountyWorth.clicked.connect(self.on_transferBountyWorth_button_click)
+        # 切换筹码显示
+        self.switchChipButton.clicked.connect(self.on_switchChip_button_click)
         # 显示跟注范围
         self.rangeButton.clicked.connect(self.on_range_button_click)
         self.rangeButton_2.clicked.connect(self.on_range_button2_click)
@@ -169,24 +174,73 @@ class MyWindow(QMainWindow, Ui_PSKO):
         self.showImage(image_path)
         self.child_window.show()
 
-    def on_button_click(self, Form):
+    def on_calculate_button_click(self, Form):
         if self.assure_textInput_notEmpty():
-            curPot = float(self.textEdit_curPot.toPlainText())
-            toCall = float(self.textEdit_toCall.toPlainText())
-            bountyMagnification = float(
-                self.textEdit_bountyMagnification.toPlainText())
-            startingChips = float(self.textEdit_startingChips.toPlainText())
-            left_players = float(self.textEdit_leftPalyers.toPlainText())
-            total_players = float(self.textEdit_totalPlayers.toPlainText())
-            equity = calculate_equity_to_call(curPot, toCall,
-                                              bountyMagnification,
-                                              startingChips, left_players,
-                                              total_players)
-            equity_percentage = "{:.2%}".format(equity)
-            self.textBrowser.setText(str(equity_percentage))
+            if self.chipMode:
+                curPot = float(self.textEdit_curPot.toPlainText())
+                toCall = float(self.textEdit_toCall.toPlainText())
+                bountyMagnification = float(
+                    self.textEdit_bountyMagnification.toPlainText())
+                startingChips = float(self.textEdit_startingChips.toPlainText())
+                left_players = float(self.textEdit_leftPalyers.toPlainText())
+                total_players = float(self.textEdit_totalPlayers.toPlainText())
+                equity = calculate_equity_to_call(curPot, toCall,
+                                                bountyMagnification,
+                                                startingChips, left_players,
+                                                total_players)
+                equity_percentage = "{:.2%}".format(equity)
+                self.textBrowser.setText(str(equity_percentage))
+            else:
+                bb = int(self.textEdit_BB.toPlainText())
+                curPot = float(self.textEdit_curPot.toPlainText()) * bb
+                toCall = float(self.textEdit_toCall.toPlainText()) * bb
+                bountyMagnification = float(
+                    self.textEdit_bountyMagnification.toPlainText())
+                startingChips = float(self.textEdit_startingChips.toPlainText())
+                left_players = float(self.textEdit_leftPalyers.toPlainText())
+                total_players = float(self.textEdit_totalPlayers.toPlainText())
+                equity = calculate_equity_to_call(curPot, toCall,
+                                                bountyMagnification,
+                                                startingChips, left_players,
+                                                total_players)
+                equity_percentage = "{:.2%}".format(equity)
+                self.textBrowser.setText(str(equity_percentage))
         else:
-            self.textBrowser.setText("输入内容不能为空")
+            self.textBrowser.setText("左侧输入内容不能为空")
 
+    def on_transferBountyWorth_button_click(self):
+        bountyMagnification = float(self.textEdit_bountyMagnification.toPlainText())
+        startingChips = float(self.textEdit_startingChips.toPlainText())
+        left_players = float(self.textEdit_leftPalyers.toPlainText())
+        total_players = float(self.textEdit_totalPlayers.toPlainText())
+        bountyWorthValue = calculate_bounty_worth(bountyMagnification, startingChips, left_players, total_players)
+        if self.chipMode:
+            self.textBrowser_BountyWorth.setText(str(round(bountyWorthValue)))
+        else:
+            bb = float(self.textEdit_BB.toPlainText())
+            self.textBrowser_BountyWorth.setText(str(round(bountyWorthValue/bb, 1)) + "BB")
+    
+    def on_switchChip_button_click(self):
+        # Chip->BB，确保输入非空
+        if self.textEdit_BB.toPlainText() == "":
+            self.textBrowser.setText("请输入大盲(一个大盲等于多少筹码)")
+        # 确保输入合规
+        else:
+            if not self.textEdit_BB.toPlainText().isnumeric():
+                self.textBrowser.setText("请在大盲位置输入合规的数字")
+            # 一切合规之后
+            else:
+                self.chipMode = not self.chipMode
+                if self.chipMode:
+                    self.switchChipButton.setText("Chip")
+                else:
+                    self.switchChipButton.setText("BB")
+                self.clear()
+                # TODO: 不需要对已经输入的筹码进行换算，直接输入BB数量即可
+    
+    def clear(self):
+        self.textBrowser.setText("")
+        self.textBrowser_BountyWorth.setText("")
 
 class ChildWindow(QWidget, Ui_Range):
     def __init__(self, parent=None):

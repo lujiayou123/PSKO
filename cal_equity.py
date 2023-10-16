@@ -35,6 +35,24 @@ def calculate_equity_to_call(curPot, toCall, bountyMagnification, startingChips,
     pot = curPot + toCall + bounty_chips
     equity = toCall / pot
     return equity
+'''
+计算所bounty的价值
+@Parameters    :
+  bountyMagnification- 赏金的倍数(即赏金总数除以起始赏金)
+  startingChips- 起始筹码量
+  left_players- 还剩下多少名玩家
+  total_players- 总共报名参赛的玩家
+  remaining_percentage- 剩下多少名玩家的比例
+@Returns       : This is a description of what is returned
+@Raises        : KeyError - raises an exception
+'''
+
+
+def calculate_bounty_worth(bountyMagnification, startingChips, left_players, total_players):
+    remaining_percentage = left_players/total_players
+    bounty_worth_ratio = calculate_bounty_worth_ratio(remaining_percentage)
+    bounty_chips = startingChips * bounty_worth_ratio * bountyMagnification
+    return bounty_chips
 
 if __name__ == '__main__':
     equity = calculate_equity_to_call(curPot=7000, toCall=5992, bountyMagnification=1, startingChips=10000, left_players=484, total_players=771)
